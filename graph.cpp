@@ -13,8 +13,6 @@ Graph::Graph(int size) : nodes(size) {}
 
 void Graph::addEdge(int src, int dest) {
     nodes[src].neighbors.insert(dest);
-    // Uncomment the next line for an undirected graph
-    //nodes[dest].neighbors.insert(src);
 }
 
 const std::set<int>& Graph::getNeighbors(int nodeIndex) const {
