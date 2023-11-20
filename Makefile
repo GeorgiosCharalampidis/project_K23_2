@@ -3,7 +3,7 @@ CXX = g++
 CXXFLAGS = -Wall -g
 
 # Executable name
-TARGET = graph
+TARGET = graph_search
 
 # Object files
 OBJS = mnist.o lsh_class.o Hypercube.o graph.o global_functions.o graph_search.o
@@ -33,7 +33,7 @@ graph.o: graph.cpp graph.h lsh_class.h Hypercube.h mnist.h global_functions.h
 global_functions.o: global_functions.cpp global_functions.h
 	$(CXX) $(CXXFLAGS) -c global_functions.cpp
 
-graph_search.o: graph_search.cpp graph.h
+graph_search.o: graph_search.cpp graph.h lsh_class.h Hypercube.h mnist.h global_functions.h
 	$(CXX) $(CXXFLAGS) -c graph_search.cpp
 
 # Clean rule
