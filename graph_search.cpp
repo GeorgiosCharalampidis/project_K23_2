@@ -14,6 +14,7 @@
 #include <chrono>
 #include "mnist.h"
 #include "lsh_class.h"
+#include "Hypercube.h"
 #include "global_functions.h"
 #include "graph.h"
 
@@ -82,6 +83,7 @@ int main(int argc, char** argv) {
 
         LSH lsh(dataset);
 
+        Hypercube cube(dataset);
 
         std::ofstream outputFileStream("output.dat");
         if (!outputFileStream.is_open() || outputFileStream.fail()) {
@@ -93,7 +95,8 @@ int main(int argc, char** argv) {
 
         std::cout << "Building the k-NNG..." << std::endl;
 
-        Graph kNNG = buildKNNG(lsh, k, datasetSize);
+        Graph kNNG_L = buildKNNG(lsh, k, datasetSize);
+        Graph kNNG_H = buildKNNG_H(cube, k, datasetSize);
 
         std::cout << "Finished building the k-NNG." << std::endl;
 
@@ -107,7 +110,7 @@ int main(int argc, char** argv) {
 
             // GNNS results
             auto startGNNS = std::chrono::high_resolution_clock::now();
-            auto gnnsResults = GNNS(kNNG, query_set[i], N, R, T, E);
+            auto gnnsResults = GNNS(kNNG_L, query_set[i], N, R, T, E);
             auto endGNNS = std::chrono::high_resolution_clock::now();
             double tGNNS = std::chrono::duration<double, std::milli>(endGNNS - startGNNS).count() / 1000.0;
 

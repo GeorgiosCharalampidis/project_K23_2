@@ -12,9 +12,12 @@ public:
     ~Hypercube();
 
 
-    std::vector<std::pair<int, double>> kNearestNeighbors(const std::vector<unsigned char>& q);
+    std::vector<std::pair<int, double>> kNearestNeighbors(const std::vector<unsigned char>& q,int K);
     std::vector<int> rangeSearch(const std::vector<unsigned char>& q);
     std::vector<int> rangeSearch(const std::vector<unsigned char>& q, double radius);
+
+    // Function to get the dataset
+    const std::vector<std::vector<unsigned char>>& getDataset() const;
 
     [[nodiscard]] int returnN() const;
     [[nodiscard]] double returnR() const;

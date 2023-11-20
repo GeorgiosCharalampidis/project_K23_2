@@ -8,7 +8,7 @@
 #include <vector>
 #include <set>
 #include "lsh_class.h" // Include your LSH class header
-
+#include "Hypercube.h" // Include your Hypercube class header
 
 
 // Define a Node for the Graph
@@ -35,6 +35,7 @@ private:
 
 // Function to construct the k-NNG using LSH
 Graph buildKNNG(LSH &lsh, int k, int datasetSize);
+Graph buildKNNG_H(Hypercube &hypercube, int k, int datasetSize);
 
 std::vector<std::pair<int, double>> GNNS(const Graph& graph, const std::vector<unsigned char>& queryPoint, int K, int R, int T, int E);
 

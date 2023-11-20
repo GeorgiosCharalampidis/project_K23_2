@@ -128,7 +128,7 @@ std::vector<std::pair<std::vector<float>, float>> Hypercube::createHashFunctions
     return table_functions_;
 }
 
-std::vector<std::pair<int, double>> Hypercube::kNearestNeighbors(const std::vector<unsigned char>& q) {
+std::vector<std::pair<int, double>> Hypercube::kNearestNeighbors(const std::vector<unsigned char>& q,int K) {
     std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int>>, std::greater<>> nearest_neighbors_queue;
     std::vector<int> candidateIndices = probe(q, probes); // IT WAS k not probes
 
@@ -146,7 +146,7 @@ std::vector<std::pair<int, double>> Hypercube::kNearestNeighbors(const std::vect
     std::vector<std::pair<int, double>> nearest_neighbors;
 
     int count = 0;
-    while (!nearest_neighbors_queue.empty() && count < N) {
+    while (!nearest_neighbors_queue.empty() && count < K) {
         nearest_neighbors.emplace_back(nearest_neighbors_queue.top().second, nearest_neighbors_queue.top().first);
         nearest_neighbors_queue.pop();
         count++;
@@ -209,6 +209,10 @@ std::vector<float> Hypercube::reduceDimensionality(const std::vector<unsigned ch
     //std::cout << "Exiting reduceDimensionality function." << std::endl;
     //std::cout << "reduced_point.size(): " << reduced_point.size() << std::endl;
     return reduced_point;
+}
+
+const std::vector<std::vector<unsigned char>>& Hypercube::getDataset() const {
+    return dataset;
 }
 
 int Hypercube::returnN() const {

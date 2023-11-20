@@ -37,6 +37,24 @@ Graph buildKNNG(LSH &lsh, int k, int datasetSize) {
     return kNNG;
 }
 
+Graph buildKNNG_H(Hypercube &hypercube, int k, int datasetSize) {
+    Graph kNNG(datasetSize);
+
+    for (int i = 0; i < datasetSize; ++i) {
+        const std::vector<unsigned char>& queryPoint = hypercube.getDataset()[i];
+
+        kNNG.storePoint(queryPoint);
+
+        auto neighbors = hypercube.kNearestNeighbors(queryPoint, k);
+        for (const auto& neighbor : neighbors) {
+            int neighborIndex = neighbor.first;
+            kNNG.addEdge(i, neighborIndex);
+        }
+    }
+
+    return kNNG;
+}
+
 void Graph::storePoint(const std::vector<unsigned char>& point) {
     dataPoints.push_back(point);
 }
