@@ -26,6 +26,7 @@ Graph buildKNNG(LSH &lsh, int k, int datasetSize) {
 
     for (int i = 0; i < datasetSize; ++i) {
         const std::vector<unsigned char>& queryPoint = lsh.getDataset()[i];
+
         kNNG.storePoint(queryPoint);
 
         auto neighbors = lsh.queryNNearestNeighbors(queryPoint, k);
