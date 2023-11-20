@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
         std::cout << "Building the k-NNG..." << std::endl;
 
         Graph kNNG_L = buildKNNG(lsh, k, datasetSize);
-        Graph kNNG_H = buildKNNG_H(cube, k, datasetSize);
+        //Graph kNNG_H = buildKNNG_H(cube, k, datasetSize);
 
         std::cout << "Finished building the k-NNG." << std::endl;
 
