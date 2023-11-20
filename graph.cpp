@@ -50,7 +50,6 @@ int Graph::size() const {
     return nodes.size();
 }
 
-
 std::vector<std::pair<int, double>> GNNS(const Graph& graph, const std::vector<unsigned char>& queryPoint, int N, int R, int T, int E) {
     std::vector<std::pair<int, double>> potentialNeighbors;
 

@@ -99,8 +99,10 @@ int main(int argc, char** argv) {
 
         int T = 10; // Number of greedy steps
 
+        std::cout << "Starting GNNS..." << std::endl;
+
         // Iterate through the query set
-        for (size_t i = 0; i < query_set.size() && i < 10; ++i) {
+        for (size_t i = 0; i < 10; ++i) {
             outputFileStream << "\nQuery: " << i << std::endl;
 
             // GNNS results
@@ -133,6 +135,8 @@ int main(int argc, char** argv) {
             outputFileStream << "tAverageTrue: " << tTrue << " seconds" << std::endl;
             outputFileStream << "MAF: " << maxApproximationFactor << std::endl;
         }
+
+        std::cout << "Finished GNNS." << std::endl;
 
         // Ask the user if they want to repeat with new files
         std::cout << "Do you want to repeat with new input.dat and query.dat? (y/n): ";
