@@ -6,16 +6,27 @@ Hello delapongoli
 
 Ακολουθεί μία μικρή εξήγηση 
 
-Graph Construction (buildKNNG Function):
+1. **Κλάση Graph**:
+   - Η κλάση `Graph` αντιπροσωπεύει ένα γράφημα. Αρχικοποιείται με έναν αριθμό κόμβων (`size`) και περιέχει μεθόδους για την προσθήκη ακμών και τη λήψη γειτόνων ενός κόμβου.
 
-The code constructs the k-NN graph using the LSH algorithm, which is consistent with the idea of building a k-NN graph in an offline phase.
-For each point in the dataset, it queries the k nearest neighbors and adds edges to these neighbors in the graph.
+2. **Προσθήκη Ακμής (addEdge)**:
+   - Η μέθοδος `addEdge` προσθέτει μια ακμή στο γράφημα, συνδέοντας δύο κόμβους (π.χ., από τον `src` στον `dest`).
 
-GNNS Algorithm (GNNS Function):
-The GNNS function in your code performs a hill-climbing search starting from randomly chosen nodes.
-It iterates for a fixed number of greedy steps (T) and expansions (E), choosing at each step the neighbor closest to the query point, which is consistent with the GNNS algorithm described in the paper.
-The function sorts the potential neighbors based on their distance to the query point and then selects the top N.
+3. **Λήψη Γειτόνων (getNeighbors)**:
+   - Η μέθοδος `getNeighbors` επιστρέφει το σύνολο των γειτόνων ενός κόμβου.
 
-Graph Data Structure:
-Your graph class (Graph) seems to appropriately handle storing nodes, adding edges, and retrieving neighbors, which are essential for implementing the GNNS algorithm.
+4. **Δημιουργία k-Νearest Neighbor Graph (buildKNNG)**:
+   - Η συνάρτηση `buildKNNG` χρησιμοποιεί τον αλγόριθμο LSH για να δημιουργήσει ένα γράφημα k-Nearest Neighbors. Αναζητά τους k πλησιέστερους γείτονες για κάθε σημείο του σετ δεδομένων και προσθέτει ακμές ανάμεσά τους στο γράφημα.
+
+5. **Αποθήκευση Σημείων (storePoint, getPoint)**:
+   - Οι μέθοδοι `storePoint` και `getPoint` αποθηκεύουν και επιστρέφουν αντίστοιχα τα δεδομένα (σημεία) που αντιστοιχούν σε κάθε κόμβο του γράφηματος.
+
+6. **Εύρεση Πλησιέστερων Γειτόνων (GNNS)**:
+   - Η συνάρτηση `GNNS` υλοποιεί τον αλγόριθμο Greedy Nearest Neighbor Search. Ξεκινά από ένα τυχαία επιλεγμένο κόμβο και επιλέγει επανειλημμένα τον πλησιέστερο γείτονα μέχρι να φτάσει σε έναν συγκεκριμένο αριθμό βημάτων. Τα αποτελέσματα (κόμβοι και αποστάσεις) αποθηκεύονται σε ένα διάνυσμα.
+
+7. **Ταξινόμηση και Επιστροφή Αποτελεσμάτων**:
+   - Μετά την ολοκλήρωση των αναζητήσεων, τα πιθανά αποτελέσματα ταξινομούνται βάσει της απόστασής τους από το σημείο ερωτήματος και επιστρέφονται τα πρώτα `N` στοιχεία.
+
+Συνοψίζοντας, ο κώδικας δημιουργεί ένα γράφημα k-πλησιέστερων γειτόνων μέσω της χρήσης του LSH και στη συνέχεια εφαρμόζει έναν αλγόριθμο εύρεσης πλησιέστερων γειτόνων για να βρει τα πιο κοντινά σημεία σε ένα δοσμένο σημείο ερωτήματος.
+
 
