@@ -1,0 +1,3 @@
+C:/Users/test/CLionProjects/Project_K23_SEC/cmake-build-debug/CMakeFiles/Project_K23_SEC.dir
+C:/Users/test/CLionProjects/Project_K23_SEC/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/test/CLionProjects/Project_K23_SEC/cmake-build-debug/CMakeFiles/rebuild_cache.dir

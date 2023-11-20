@@ -1,0 +1,12 @@
+# ninja log v5
+1	230	7222061720254977	build.ninja	30a9f3178b10e90c
+11	877	7222058947113267	CMakeFiles/Project_K23_SEC.dir/global_functions.cpp.obj	7b27d36a2707b0b1
+21	764	7221959518878011	CMakeFiles/Project_K23_SEC.dir/mnist.cpp.obj	3df39cd608125a65
+3	387	7221959770015547	CMakeFiles/Project_K23_SEC.dir/main.cpp.obj	c33838620fff08c8
+3	914	7221997198311656	CMakeFiles/Project_K23_SEC.dir/lsh.cpp.obj	92efb3ef1d719a6f
+26	1323	7221959524472391	CMakeFiles/Project_K23_SEC.dir/cube.cpp.obj	c061fd77445f7782
+3	1593	7221996973917205	CMakeFiles/Project_K23_SEC.dir/lsh_class.cpp.obj	8d294dc02223f914
+6	1586	7221959526838577	CMakeFiles/Project_K23_SEC.dir/Hypercube.cpp.obj	c648490479bb9395
+994	1489	7222060011360750	Project_K23_SEC.exe	3ded1a03cc2de024
+4	994	7222060006463819	CMakeFiles/Project_K23_SEC.dir/graph_search.cpp.obj	34627e5551f7b4a4
+4	1177	7222058950087663	CMakeFiles/Project_K23_SEC.dir/graph.cpp.obj	56c97966670a893f
