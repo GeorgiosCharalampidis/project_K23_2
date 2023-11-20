@@ -148,7 +148,7 @@ void LSH::printHashTables() {
 }
 
 
-std::vector<std::pair<int, double>> LSH::queryNNearestNeighbors(const std::vector<unsigned char>& query_point, int k) {
+std::vector<std::pair<int, double>> LSH::queryNNearestNeighbors(const std::vector<unsigned char>& query_point, int K) {
     std::priority_queue<std::pair<double, int>> nearest_neighbors_queue;
     for (int table_index = 0; table_index < L; ++table_index) {
         int64_t query_id_value = computeID(query_point, table_index); // Compute the ID for the query_point
@@ -165,7 +165,7 @@ std::vector<std::pair<int, double>> LSH::queryNNearestNeighbors(const std::vecto
     }
 
     std::vector<std::pair<int, double>> nearest_neighbors;
-    while (!nearest_neighbors_queue.empty() && nearest_neighbors.size() < k) {
+    while (!nearest_neighbors_queue.empty() && nearest_neighbors.size() < K) {
         nearest_neighbors.emplace_back(nearest_neighbors_queue.top().second, nearest_neighbors_queue.top().first);
         nearest_neighbors_queue.pop();
     }

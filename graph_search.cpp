@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     int number_of_images, image_size;
     int k = 50; // Number of nearest neighbors in graph
     int E = 30; // Number of expansions
-    int R = 1;  // Number of random restarts
+    int R = 10; // Number of random restarts
     int N = 1;  // Number of nearest neighbors to search for
     int l = 0;  // Only for Search-on-Graph
     int mode = 0; // 1 for GNNS, 2 for MRNG
@@ -101,6 +101,7 @@ int main(int argc, char** argv) {
         std::cout << "Finished building the k-NNG." << std::endl;
 
         int T = 10; // Number of greedy steps
+
 
         std::cout << "Starting GNNS..." << std::endl;
 

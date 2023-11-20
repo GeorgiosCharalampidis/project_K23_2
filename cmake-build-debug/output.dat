@@ -1,80 +1,80 @@
 
 Query: 0
-Nearest neighbor-1: 53589
-distanceApproximate: 1141.39
+Nearest neighbor-1: 25705
+distanceApproximate: 1107.25
 distanceTrue: 676.584
-tAverageApproximate: 0.0074553 seconds
-tAverageTrue: 0.243328 seconds
-MAF: 1.687
+tAverageApproximate: 0.0012886 seconds
+tAverageTrue: 0.230334 seconds
+MAF: 1.63654
 
 Query: 1
-Nearest neighbor-1: 42413
-distanceApproximate: 1876.92
+Nearest neighbor-1: 49026
+distanceApproximate: 2065.71
 distanceTrue: 1162.93
-tAverageApproximate: 0.0094257 seconds
-tAverageTrue: 0.234518 seconds
-MAF: 1.61396
+tAverageApproximate: 0.0011965 seconds
+tAverageTrue: 0.227937 seconds
+MAF: 1.7763
 
 Query: 2
-Nearest neighbor-1: 46512
-distanceApproximate: 332.464
+Nearest neighbor-1: 43844
+distanceApproximate: 512.995
 distanceTrue: 321.663
-tAverageApproximate: 0.0116711 seconds
-tAverageTrue: 0.224269 seconds
-MAF: 1.03358
+tAverageApproximate: 0.0049494 seconds
+tAverageTrue: 0.230183 seconds
+MAF: 1.59482
 
 Query: 3
-Nearest neighbor-1: 48807
-distanceApproximate: 1304.36
+Nearest neighbor-1: 34523
+distanceApproximate: 1238.34
 distanceTrue: 1221.58
-tAverageApproximate: 0.0051754 seconds
-tAverageTrue: 0.224744 seconds
-MAF: 1.06776
+tAverageApproximate: 0.0010383 seconds
+tAverageTrue: 0.227918 seconds
+MAF: 1.01372
 
 Query: 4
-Nearest neighbor-1: 23306
-distanceApproximate: 1247.82
+Nearest neighbor-1: 8448
+distanceApproximate: 1630.44
 distanceTrue: 1092.53
-tAverageApproximate: 0.0044122 seconds
-tAverageTrue: 0.232972 seconds
-MAF: 1.14213
+tAverageApproximate: 0.0012608 seconds
+tAverageTrue: 0.230332 seconds
+MAF: 1.49234
 
 Query: 5
-Nearest neighbor-1: 3468
-distanceApproximate: 373.042
+Nearest neighbor-1: 52627
+distanceApproximate: 389.914
 distanceTrue: 298.124
-tAverageApproximate: 0.0092784 seconds
-tAverageTrue: 0.233954 seconds
-MAF: 1.2513
+tAverageApproximate: 0.0034846 seconds
+tAverageTrue: 0.267388 seconds
+MAF: 1.30789
 
 Query: 6
-Nearest neighbor-1: 54617
-distanceApproximate: 1606.68
+Nearest neighbor-1: 27468
+distanceApproximate: 1756.92
 distanceTrue: 1302.71
-tAverageApproximate: 0.0075092 seconds
-tAverageTrue: 0.227517 seconds
-MAF: 1.23334
+tAverageApproximate: 0.0019445 seconds
+tAverageTrue: 0.239348 seconds
+MAF: 1.34867
 
 Query: 7
-Nearest neighbor-1: 27371
-distanceApproximate: 1876.18
+Nearest neighbor-1: 34822
+distanceApproximate: 1893.22
 distanceTrue: 1289.7
-tAverageApproximate: 0.0063996 seconds
-tAverageTrue: 0.223441 seconds
-MAF: 1.45475
+tAverageApproximate: 0.0018604 seconds
+tAverageTrue: 0.224432 seconds
+MAF: 1.46796
 
 Query: 8
-Nearest neighbor-1: 36905
-distanceApproximate: 2139.95
+Nearest neighbor-1: 22822
+distanceApproximate: 2258.6
 distanceTrue: 1735.34
-tAverageApproximate: 0.0038103 seconds
-tAverageTrue: 0.222623 seconds
-MAF: 1.23315
+tAverageApproximate: 0.0014579 seconds
+tAverageTrue: 0.237108 seconds
+MAF: 1.30153
 
 Query: 9
-Nearest neighbor-1: 42145
-distanceApproximate: 1560.02
+Nearest neighbor-1: 30065
+distanceApproximate: 1443.82
 distanceTrue: 991.598
-tAverageApproximate: 0.0048127 seconds
-tAverageTrue: 0.231693 seconds
-MAF: 1.57324
+tAverageApproximate: 0.0020495 seconds
+tAverageTrue: 0.260788 seconds
+MAF: 1.45605

@@ -19,7 +19,7 @@ public:
     std::vector<int> rangeSearch(const std::vector<unsigned char>& query_point, double radius);
 
     // Function to query N nearest neighbors for a given query point
-    std::vector<std::pair<int, double>> queryNNearestNeighbors(const std::vector<unsigned char>& query_point,int k);
+    std::vector<std::pair<int, double>> queryNNearestNeighbors(const std::vector<unsigned char>& query_point,int K);
 
     // Getter for N
     [[nodiscard]] int returnN() const;

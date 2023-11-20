@@ -1,24 +1,23 @@
-//
-// Created by test on 11/20/2023.
-//
-
 #include <iostream>
-#include <algorithm> // For std::sort, std::min_element
-#include <random>
-#include <limits>
+#include <algorithm> // Include for sorting and other algorithms
+#include <random> // Include for random number generation
 #include "graph.h"
 #include "global_functions.h"
 
+// Constructor for the Graph class, initializes the graph with a given size
 Graph::Graph(int size) : nodes(size) {}
 
+// Function to add an edge between two nodes in the graph
 void Graph::addEdge(int src, int dest) {
     nodes[src].neighbors.insert(dest);
 }
 
+// Function to get the neighbors of a given node in the graph
 const std::set<int>& Graph::getNeighbors(int nodeIndex) const {
     return nodes[nodeIndex].neighbors;
 }
 
+// Function to build a k-Nearest Neighbors Graph using LSH
 Graph buildKNNG(LSH &lsh, int k, int datasetSize) {
     Graph kNNG(datasetSize);
 
@@ -27,16 +26,18 @@ Graph buildKNNG(LSH &lsh, int k, int datasetSize) {
 
         kNNG.storePoint(queryPoint);
 
+        // Query for the k nearest neighbors of the point
         auto neighbors = lsh.queryNNearestNeighbors(queryPoint, k);
         for (const auto& neighbor : neighbors) {
             int neighborIndex = neighbor.first;
-            kNNG.addEdge(i, neighborIndex);
+            kNNG.addEdge(i, neighborIndex); // Add edges to the graph
         }
     }
 
     return kNNG;
 }
 
+// Function to build a k-Nearest Neighbors Graph using Hypercube method
 Graph buildKNNG_H(Hypercube &hypercube, int k, int datasetSize) {
     Graph kNNG(datasetSize);
 
@@ -45,28 +46,34 @@ Graph buildKNNG_H(Hypercube &hypercube, int k, int datasetSize) {
 
         kNNG.storePoint(queryPoint);
 
+        // Query for the k nearest neighbors of the point
         auto neighbors = hypercube.kNearestNeighbors(queryPoint, k);
         for (const auto& neighbor : neighbors) {
             int neighborIndex = neighbor.first;
-            kNNG.addEdge(i, neighborIndex);
+            kNNG.addEdge(i, neighborIndex); // Add edges to the graph
         }
     }
 
     return kNNG;
 }
 
+// Function to store a point in the graph
 void Graph::storePoint(const std::vector<unsigned char>& point) {
     dataPoints.push_back(point);
 }
 
+// Function to get a point from the graph using its node index
 const std::vector<unsigned char>& Graph::getPoint(int nodeIndex) const {
     return dataPoints[nodeIndex];
 }
 
-int Graph::size() const {
+// Function to get the size of the graph
+std::size_t Graph::size() const {
     return nodes.size();
 }
 
+
+// Greedy Nearest Neighbor Search (GNNS) function
 std::vector<std::pair<int, double>> GNNS(const Graph& graph, const std::vector<unsigned char>& queryPoint, int N, int R, int T, int E) {
     std::vector<std::pair<int, double>> potentialNeighbors;
 
@@ -80,7 +87,8 @@ std::vector<std::pair<int, double>> GNNS(const Graph& graph, const std::vector<u
         for (int t = 0; t < T; ++t) {
             const auto& neighbors = graph.getNeighbors(currentNode);
             int bestNeighbor = currentNode;
-            double bestDistance = std::numeric_limits<double>::max();
+            double bestDistance = euclideanDistance(graph.getPoint(currentNode), queryPoint);
+            bool isLocalOptimal = true;
 
             int count = 0;
             for (int neighbor : neighbors) {
@@ -91,8 +99,14 @@ std::vector<std::pair<int, double>> GNNS(const Graph& graph, const std::vector<u
                 if (distance < bestDistance) {
                     bestDistance = distance;
                     bestNeighbor = neighbor;
+                    isLocalOptimal = false;
                 }
                 count++;
+            }
+
+            // Terminate early if current node is better than its neighbors (local optimal)
+            if (isLocalOptimal) {
+                break;
             }
 
             currentNode = bestNeighbor;
@@ -105,18 +119,17 @@ std::vector<std::pair<int, double>> GNNS(const Graph& graph, const std::vector<u
                   return a.second < b.second;
               });
 
-    // Remove duplicates
+    // Remove duplicate entries from the list of potential neighbors
     auto last = std::unique(potentialNeighbors.begin(), potentialNeighbors.end(),
-                            [](const std::pair<int, double>& a, const std::pair<int, double>& b) {
+                            [](const std::pair<int, double>& a, const std::pair<int, double>& b){
                                 return a.first == b.first;
                             });
     potentialNeighbors.erase(last, potentialNeighbors.end());
 
-    // Resize to keep only the first N elements
+    // Keep only the top N elements in the list of potential neighbors
     if (potentialNeighbors.size() > N) {
         potentialNeighbors.resize(N);
     }
 
     return potentialNeighbors;
 }
-

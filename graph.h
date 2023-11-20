@@ -23,8 +23,8 @@ public:
     explicit Graph(int size);
     void addEdge(int src, int dest);
     [[nodiscard]] const std::set<int>& getNeighbors(int nodeIndex) const;
-    int size() const; // Returns the number of nodes in the graph
-    const std::vector<unsigned char>& getPoint(int nodeIndex) const; // Returns the data point for a given node
+    [[nodiscard]] std::size_t size() const; // Returns the number of nodes in the graph
+    [[nodiscard]] const std::vector<unsigned char>& getPoint(int nodeIndex) const; // Returns the data point for a given node
     // Method to store a data point
     void storePoint(const std::vector<unsigned char>& point);
 private:
