@@ -1,6 +1,6 @@
 # Compiler settings
 CXX = g++
-CXXFLAGS = -Wall -g -std=c++17
+CXXFLAGS = -Wall -g
 
 # Executable name
 TARGET = graph
