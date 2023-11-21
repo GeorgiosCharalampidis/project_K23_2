@@ -47,5 +47,10 @@ Hello delapongoli
 
 Μετά την εντολή make τρέχεις 
 
-./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 30 -m 1 -o output.dat
+1. **Για να εκτελέσεις GNNS**:
+   ./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 30 -m 1 -o output.dat
+2. **Για να εκτελέσεις Search-on-Graph σε MRNG**:
+   ./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 30 -m 2 -o output.dat
+
+
 
