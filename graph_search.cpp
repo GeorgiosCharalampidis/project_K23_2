@@ -98,13 +98,19 @@ int main(int argc, char** argv) {
             for (int i = 0; i < 10; ++i) {
                 outputFileStream << "\nQuery: " << i << std::endl;
 
-                auto startTime = std::chrono::high_resolution_clock::now();
+                auto startTimeAlgorithm = std::chrono::high_resolution_clock::now();
                 auto results = kNNG_L.GNNS(query_set[i], N, R, T, E);
-                auto endTime = std::chrono::high_resolution_clock::now();
+                auto endTimeAlgorithm = std::chrono::high_resolution_clock::now();
 
-                double tAlgorithm = std::chrono::duration<double, std::milli>(endTime - startTime).count() / 1000.0;
+                double tAlgorithm = std::chrono::duration<double, std::milli>(endTimeAlgorithm - startTimeAlgorithm).count() / 1000.0;
+
+                auto startTimeTrue = std::chrono::high_resolution_clock::now();
                 auto trueResults = trueNNearestNeighbors(dataset, query_set[i], N);
-                double tTrue = std::chrono::duration<double, std::milli>(endTime - startTime).count() / 1000.0;
+                auto endTimeTrue = std::chrono::high_resolution_clock::now();
+
+                double tTrue = std::chrono::duration<double, std::milli>(endTimeTrue - startTimeTrue).count() / 1000.0;
+
+
                 double maxApproximationFactor = 0.0;
 
                 for (int j = 0; j < N; ++j) {
@@ -139,13 +145,21 @@ int main(int argc, char** argv) {
             for (int i = 0; i < 10; ++i) {
                 outputFileStream << "\nQuery: " << i << std::endl;
 
-                auto startTime = std::chrono::high_resolution_clock::now();
+                // Start time for MRNG algorithm
+                auto startTimeAlgorithm = std::chrono::high_resolution_clock::now();
                 auto results = mrngGraph.searchOnGraph(query_set[i], 0, N, l);
-                auto endTime = std::chrono::high_resolution_clock::now();
+                auto endTimeAlgorithm = std::chrono::high_resolution_clock::now();
 
-                double tAlgorithm = std::chrono::duration<double, std::milli>(endTime - startTime).count() / 1000.0;
+                // Calculate the time taken by the MRNG algorithm
+                double tAlgorithm = std::chrono::duration<double, std::milli>(endTimeAlgorithm - startTimeAlgorithm).count() / 1000.0;
+
+                // Start time for true nearest neighbors search
+                auto startTimeTrue = std::chrono::high_resolution_clock::now();
                 auto trueResults = trueNNearestNeighbors(dataset, query_set[i], N);
-                double tTrue = std::chrono::duration<double, std::milli>(endTime - startTime).count() / 1000.0;
+                auto endTimeTrue = std::chrono::high_resolution_clock::now();
+
+                // Calculate the time taken by the true nearest neighbors search
+                double tTrue = std::chrono::duration<double, std::milli>(endTimeTrue - startTimeTrue).count() / 1000.0;
                 double maxApproximationFactor = 0.0;
 
                 for (int j = 0; j < N; ++j) {

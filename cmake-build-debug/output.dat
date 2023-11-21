@@ -1,0 +1,55 @@
+GNNS Results
+
+Query: 0
+Nearest neighbor-1: 223
+distanceApproximate: 1518.68
+distanceTrue: 676.584
+
+Query: 1
+Nearest neighbor-1: 674
+distanceApproximate: 2234.39
+distanceTrue: 1162.93
+
+Query: 2
+Nearest neighbor-1: 2162
+distanceApproximate: 1636
+distanceTrue: 321.663
+
+Query: 3
+Nearest neighbor-1: 542
+distanceApproximate: 2083.52
+distanceTrue: 1221.58
+
+Query: 4
+Nearest neighbor-1: 2753
+distanceApproximate: 1865.42
+distanceTrue: 1092.53
+
+Query: 5
+Nearest neighbor-1: 1110
+distanceApproximate: 2184.47
+distanceTrue: 298.124
+
+Query: 6
+Nearest neighbor-1: 243
+distanceApproximate: 2003.63
+distanceTrue: 1302.71
+
+Query: 7
+Nearest neighbor-1: 442
+distanceApproximate: 2051.7
+distanceTrue: 1289.7
+
+Query: 8
+Nearest neighbor-1: 152
+distanceApproximate: 2529.81
+distanceTrue: 1735.34
+
+Query: 9
+Nearest neighbor-1: 1441
+distanceApproximate: 2051.38
+distanceTrue: 991.598
+
+tAlgorithm: 0.00015996
+tTrue: 0.225406
+MAF: 2.66479
