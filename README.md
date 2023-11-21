@@ -1,5 +1,15 @@
 Hello delapongoli
 
+Υπάρχει MAKEFILE
+
+Μετά την εντολή make τρέχεις 
+
+1. **Για να εκτελέσεις GNNS**:
+   ./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 30 -m 1 -o output.dat
+2. **Για να εκτελέσεις Search-on-Graph σε MRNG**:
+   ./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 30 -m 2 -o output.dat
+
+
 Έχω κρατήσει κάποια αρχέια από το προηγούμενο project και πρόσθεσα το graph_search.cpp , που είναι η αντίστοιχη main.
 
 Έφτιαξα τα graph.cpp και graph.h που είναι ο αλγόριθμος αναζήτησης πλησιέστερων γειτόνων GNNS.
@@ -43,14 +53,7 @@ Hello delapongoli
    - Ξεκινάει από έναν συγκεκριμένο κόμβο και εξετάζει τους γείτονές του για να βρει τους κοντινότερους κόμβους σε ένα σημείο ερωτήματος (`query`).
    - Η αναζήτηση περιορίζεται σε έναν αριθμό `l` υποψήφιων γειτόνων και επιστρέφει τους `k` κοντινότερους.
 
-Υπάρχει MAKEFILE
 
-Μετά την εντολή make τρέχεις 
-
-1. **Για να εκτελέσεις GNNS**:
-   ./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 30 -m 1 -o output.dat
-2. **Για να εκτελέσεις Search-on-Graph σε MRNG**:
-   ./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 30 -m 2 -o output.dat
 
 
 
