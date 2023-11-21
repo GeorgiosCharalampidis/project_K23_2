@@ -13,7 +13,6 @@
 
 // Define a Node for the Graph
 struct Node {
-    int index; // Index of the data point in the dataset
     std::set<int> neighbors; // Set of indices of the neighbors
 };
 
@@ -27,6 +26,7 @@ public:
     [[nodiscard]] const std::vector<unsigned char>& getPoint(int nodeIndex) const; // Returns the data point for a given node
     // Method to store a data point
     void storePoint(const std::vector<unsigned char>& point);
+    [[nodiscard]] std::vector<std::pair<int, double>> GNNS(const std::vector<unsigned char>& queryPoint, int K, int R, int T, int E) const;
 private:
     std::vector<Node> nodes;
     std::vector<std::vector<unsigned char>> dataPoints;
@@ -37,7 +37,6 @@ private:
 Graph buildKNNG(LSH &lsh, int k, int datasetSize);
 Graph buildKNNG_H(Hypercube &hypercube, int k, int datasetSize);
 
-std::vector<std::pair<int, double>> GNNS(const Graph& graph, const std::vector<unsigned char>& queryPoint, int K, int R, int T, int E);
 
 
 #endif //PROJECT_K23_SEC_GRAPH_H

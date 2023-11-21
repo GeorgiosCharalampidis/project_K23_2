@@ -85,6 +85,12 @@ build CMakeFiles/Project_K23_SEC.dir/graph_search.cpp.obj: CXX_COMPILER__Project
   OBJECT_DIR = CMakeFiles\Project_K23_SEC.dir
   OBJECT_FILE_DIR = CMakeFiles\Project_K23_SEC.dir
 
+build CMakeFiles/Project_K23_SEC.dir/MRNGGraph.cpp.obj: CXX_COMPILER__Project_K23_SEC_unscanned_Debug C$:/Users/test/CLionProjects/Project_K23_SEC/MRNGGraph.cpp || cmake_object_order_depends_target_Project_K23_SEC
+  DEP_FILE = CMakeFiles\Project_K23_SEC.dir\MRNGGraph.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Project_K23_SEC.dir
+  OBJECT_FILE_DIR = CMakeFiles\Project_K23_SEC.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Project_K23_SEC
@@ -93,7 +99,7 @@ build CMakeFiles/Project_K23_SEC.dir/graph_search.cpp.obj: CXX_COMPILER__Project
 #############################################
 # Link the executable Project_K23_SEC.exe
 
-build Project_K23_SEC.exe: CXX_EXECUTABLE_LINKER__Project_K23_SEC_Debug CMakeFiles/Project_K23_SEC.dir/lsh_class.cpp.obj CMakeFiles/Project_K23_SEC.dir/Hypercube.cpp.obj CMakeFiles/Project_K23_SEC.dir/mnist.cpp.obj CMakeFiles/Project_K23_SEC.dir/global_functions.cpp.obj CMakeFiles/Project_K23_SEC.dir/graph.cpp.obj CMakeFiles/Project_K23_SEC.dir/graph_search.cpp.obj
+build Project_K23_SEC.exe: CXX_EXECUTABLE_LINKER__Project_K23_SEC_Debug CMakeFiles/Project_K23_SEC.dir/lsh_class.cpp.obj CMakeFiles/Project_K23_SEC.dir/Hypercube.cpp.obj CMakeFiles/Project_K23_SEC.dir/mnist.cpp.obj CMakeFiles/Project_K23_SEC.dir/global_functions.cpp.obj CMakeFiles/Project_K23_SEC.dir/graph.cpp.obj CMakeFiles/Project_K23_SEC.dir/graph_search.cpp.obj CMakeFiles/Project_K23_SEC.dir/MRNGGraph.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Project_K23_SEC.dir

@@ -37,6 +37,8 @@ Graph buildKNNG(LSH &lsh, int k, int datasetSize) {
     return kNNG;
 }
 
+
+
 // Function to build a k-Nearest Neighbors Graph using Hypercube method
 Graph buildKNNG_H(Hypercube &hypercube, int k, int datasetSize) {
     Graph kNNG(datasetSize);
@@ -57,6 +59,8 @@ Graph buildKNNG_H(Hypercube &hypercube, int k, int datasetSize) {
     return kNNG;
 }
 
+
+
 // Function to store a point in the graph
 void Graph::storePoint(const std::vector<unsigned char>& point) {
     dataPoints.push_back(point);
@@ -74,26 +78,26 @@ std::size_t Graph::size() const {
 
 
 // Greedy Nearest Neighbor Search (GNNS) function
-std::vector<std::pair<int, double>> GNNS(const Graph& graph, const std::vector<unsigned char>& queryPoint, int N, int R, int T, int E) {
+std::vector<std::pair<int, double>> Graph::GNNS(const std::vector<unsigned char>& queryPoint, int N, int R, int T, int E) const {
     std::vector<std::pair<int, double>> potentialNeighbors;
 
     std::random_device rd;
     std::default_random_engine engine(rd());
 
     for (int r = 0; r < R; ++r) {
-        std::uniform_int_distribution<int> distribution(0, graph.size() - 1);
+        std::uniform_int_distribution<int> distribution(0, this->size() - 1);
         int currentNode = distribution(engine);
 
         for (int t = 0; t < T; ++t) {
-            const auto& neighbors = graph.getNeighbors(currentNode);
+            const auto& neighbors = this->getNeighbors(currentNode);
             int bestNeighbor = currentNode;
-            double bestDistance = euclideanDistance(graph.getPoint(currentNode), queryPoint);
+            double bestDistance = euclideanDistance(this->getPoint(currentNode), queryPoint);
             bool isLocalOptimal = true;
 
             int count = 0;
             for (int neighbor : neighbors) {
                 if (count >= E) break;
-                double distance = euclideanDistance(graph.getPoint(neighbor), queryPoint);
+                double distance = euclideanDistance(this->getPoint(neighbor), queryPoint);
                 potentialNeighbors.emplace_back(neighbor, distance); // Store each neighbor along with the distance
 
                 if (distance < bestDistance) {

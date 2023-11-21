@@ -1,12 +1,3 @@
-//
-// Created by test on 11/20/2023.
-//
-
-///////////////////////////////////////////////////////
-//                  Start of ./graph_search          //
-///////////////////////////////////////////////////////
-
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -17,10 +8,9 @@
 #include "Hypercube.h"
 #include "global_functions.h"
 #include "graph.h"
-
+#include "MRNGGraph.h"
 
 int main(int argc, char** argv) {
-
     std::vector<std::string> args(argv, argv + argc);
 
     std::string inputFile, queryFile, outputFile;
@@ -29,17 +19,14 @@ int main(int argc, char** argv) {
     int E = 30; // Number of expansions
     int R = 10; // Number of random restarts
     int N = 1;  // Number of nearest neighbors to search for
-    int l = 0;  // Only for Search-on-Graph
+    int l = 20;  // Only for Search-on-Graph
     int mode = 0; // 1 for GNNS, 2 for MRNG
 
     char repeatChoice = 'n'; // to control the loop
     do {
-
         if (args.size() == 1) {  // Only mode provided, prompt for paths
-
             std::cout << "Enter the path to the dataset: ";
             std::cin >> inputFile;
-
         } else {
             for (size_t i = 1; i < args.size(); i++) {
                 if (args[i] == "-d") {
@@ -66,81 +53,133 @@ int main(int argc, char** argv) {
 
         std::vector<std::vector<unsigned char>> dataset = read_mnist_images(inputFile, number_of_images, image_size);
 
-
         if (queryFile.empty()) {
             std::cout << "Enter the path to the query file: ";
             std::cin >> queryFile;
         }
 
-        std::vector<std::vector<unsigned char>> query_set = read_mnist_images(queryFile, number_of_images,image_size);
-
+        std::vector<std::vector<unsigned char>> query_set = read_mnist_images(queryFile, number_of_images, image_size);
 
         if (outputFile.empty()) {
             std::cout << "Enter the path for output file: ";
             std::cin >> outputFile;
         }
 
-
-        LSH lsh(dataset);
-
-        Hypercube cube(dataset);
-
-        std::ofstream outputFileStream("output.dat");
+        std::ofstream outputFileStream(outputFile);
         if (!outputFileStream.is_open() || outputFileStream.fail()) {
-            std::cerr << "Failed to open output.dat for writing." << std::endl;
+            std::cerr << "Failed to open output file for writing." << std::endl;
             return 2;
         }
 
-        int datasetSize = 60000;
+        double totalTAlgorithm = 0.0;
+        double totalTTrue = 0.0;
+        double totalMAF = 0.0;
 
-        std::cout << "Building the k-NNG..." << std::endl;
+        if (mode == 1) {
 
-        Graph kNNG_L = buildKNNG(lsh, k, datasetSize);
-        //Graph kNNG_H = buildKNNG_H(cube, k, datasetSize);
+            // Create testset with 60000 images
+            std::vector<std::vector<unsigned char>> testset;
 
-        std::cout << "Finished building the k-NNG." << std::endl;
-
-        int T = 10; // Number of greedy steps
-
-
-        std::cout << "Starting GNNS..." << std::endl;
-
-        // Iterate through the query set
-        for (size_t i = 0; i < 10; ++i) {
-            outputFileStream << "\nQuery: " << i << std::endl;
-
-            // GNNS results
-            auto startGNNS = std::chrono::high_resolution_clock::now();
-            auto gnnsResults = GNNS(kNNG_L, query_set[i], N, R, T, E);
-            auto endGNNS = std::chrono::high_resolution_clock::now();
-            double tGNNS = std::chrono::duration<double, std::milli>(endGNNS - startGNNS).count() / 1000.0;
-
-            // True nearest neighbors for the query point
-            auto startTrue = std::chrono::high_resolution_clock::now();
-            auto trueResults = trueNNearestNeighbors(dataset, query_set[i], N);
-            auto endTrue = std::chrono::high_resolution_clock::now();
-            double tTrue = std::chrono::duration<double, std::milli>(endTrue - startTrue).count() / 1000.0;
-
-            // Calculate Maximum Approximation Factor (MAF)
-            double maxApproximationFactor = 0.0;
-            for (int j = 0; j < N; ++j) {
-                double distanceApproximate = gnnsResults[j].second;
-                double distanceTrue = trueResults[j].second;
-
-                outputFileStream << "Nearest neighbor-" << j + 1 << ": " << gnnsResults[j].first << std::endl;
-                outputFileStream << "distanceApproximate: " << distanceApproximate << std::endl;
-                outputFileStream << "distanceTrue: " << distanceTrue << std::endl;
-
-                maxApproximationFactor = std::max(maxApproximationFactor, distanceApproximate / distanceTrue);
+            for (int i = 0; i < 3000; ++i) {
+                testset.push_back(dataset[i]);
             }
 
-            // Output timing and MAF
-            outputFileStream << "tAverageApproximate: " << tGNNS << " seconds" << std::endl;
-            outputFileStream << "tAverageTrue: " << tTrue << " seconds" << std::endl;
-            outputFileStream << "MAF: " << maxApproximationFactor << std::endl;
+            int T = 10; // Number of greedy steps
+
+            LSH lsh(testset);
+            Hypercube cube(testset);
+            std::cout << "Started building the k-NNG" << std::endl;
+            Graph kNNG_L = buildKNNG(lsh, k, testset.size());
+            //Graph kNNG_L = buildKNNG_H(cube, k, testset.size());
+
+            std::cout << "Finished building the k-NNG." << std::endl;
+            outputFileStream << "GNNS Results" << std::endl;
+
+            for (int i = 0; i < 10; ++i) {
+                outputFileStream << "\nQuery: " << i << std::endl;
+
+                auto startTime = std::chrono::high_resolution_clock::now();
+                auto results = kNNG_L.GNNS(query_set[i], N, R, T, E);
+                auto endTime = std::chrono::high_resolution_clock::now();
+
+                double tAlgorithm = std::chrono::duration<double, std::milli>(endTime - startTime).count() / 1000.0;
+                auto trueResults = trueNNearestNeighbors(dataset, query_set[i], N);
+                double tTrue = std::chrono::duration<double, std::milli>(endTime - startTime).count() / 1000.0;
+                double maxApproximationFactor = 0.0;
+
+                for (int j = 0; j < N; ++j) {
+                    double distanceApproximate = results[j].second;
+                    double distanceTrue = trueResults[j].second;
+                    maxApproximationFactor = std::max(maxApproximationFactor, distanceApproximate / distanceTrue);
+                }
+
+                for (int j = 0; j < N; ++j) {
+                    outputFileStream << "Nearest neighbor-" << j + 1 << ": " << results[j].first << std::endl;
+                    outputFileStream << "distanceApproximate: " << results[j].second << std::endl;
+                    outputFileStream << "distanceTrue: " << trueResults[j].second << std::endl;
+                }
+
+                totalTAlgorithm += tAlgorithm;
+                totalTTrue += tTrue;
+                totalMAF += maxApproximationFactor;
+
+            }
+
+
+        }   else if (mode == 2) {
+            std::vector<std::vector<unsigned char>> testset;
+            for (int i = 0; i < 3000; ++i) {
+                testset.push_back(dataset[i]);
+            }
+            std::cout << "Started building the MRNG" << std::endl;
+            MRNGGraph mrngGraph(testset, l, N);
+            std::cout << "Finished building the MRNG." << std::endl;
+            outputFileStream << "MRNG Results" << std::endl;
+
+            for (int i = 0; i < 10; ++i) {
+                outputFileStream << "\nQuery: " << i << std::endl;
+
+                auto startTime = std::chrono::high_resolution_clock::now();
+                auto results = mrngGraph.searchOnGraph(query_set[i], 0, N, l);
+                auto endTime = std::chrono::high_resolution_clock::now();
+
+                double tAlgorithm = std::chrono::duration<double, std::milli>(endTime - startTime).count() / 1000.0;
+                auto trueResults = trueNNearestNeighbors(dataset, query_set[i], N);
+                double tTrue = std::chrono::duration<double, std::milli>(endTime - startTime).count() / 1000.0;
+                double maxApproximationFactor = 0.0;
+
+                for (int j = 0; j < N; ++j) {
+                    double distanceApproximate = results[j].second;
+                    double distanceTrue = trueResults[j].second;
+                    maxApproximationFactor = std::max(maxApproximationFactor, distanceApproximate / distanceTrue);
+                }
+
+                for (int j = 0; j < N; ++j) {
+                    outputFileStream << "Nearest neighbor-" << j + 1 << ": " << results[j].first << std::endl;
+                    outputFileStream << "distanceApproximate: " << results[j].second << std::endl;
+                    outputFileStream << "distanceTrue: " << trueResults[j].second << std::endl;
+                }
+
+                totalTAlgorithm += tAlgorithm;
+                totalTTrue += tTrue;
+                totalMAF += maxApproximationFactor;
+
+            }
+
+
         }
 
-        std::cout << "Finished GNNS." << std::endl;
+        // Calculate the average values for the 10 queries
+
+        totalTAlgorithm /= 10;
+        totalTTrue /= 10;
+        totalMAF /= 10;
+
+        outputFileStream << std::endl;
+        outputFileStream << "tAlgorithm: " << totalTAlgorithm << std::endl;
+        outputFileStream << "tTrue: " << totalTTrue << std::endl;
+        outputFileStream << "MAF: " << totalMAF << std::endl;
+
 
         // Ask the user if they want to repeat with new files
         std::cout << "Do you want to repeat with new input.dat and query.dat? (y/n): ";

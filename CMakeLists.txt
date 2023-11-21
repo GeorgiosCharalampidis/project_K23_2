@@ -14,4 +14,7 @@ add_executable(Project_K23_SEC
         global_functions.h
         graph.cpp
         graph.h
-        graph_search.cpp)
+        graph_search.cpp
+        MRNGGraph.cpp
+        MRNGGraph.h
+)
