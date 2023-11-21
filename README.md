@@ -47,5 +47,5 @@ Hello delapongoli
 
 Μετά την εντολή make τρέχεις 
 
-./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 1 -m 1 -o output.dat
+./graph_search -d input.dat -q query.dat -k 50 -E 30 -R 10 -N 1 -l 30 -m 1 -o output.dat
 
