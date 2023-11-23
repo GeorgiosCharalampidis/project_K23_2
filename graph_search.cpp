@@ -86,10 +86,10 @@ int main(int argc, char** argv) {
 
             int T = 10; // Number of greedy steps
 
-            LSH lsh(testset);
-            Hypercube cube(testset);
+            LSH lsh(dataset);
+            //Hypercube cube(testset);
             std::cout << "Started building the k-NNG" << std::endl;
-            Graph kNNG_L = buildKNNG(lsh, k, testset.size());
+            Graph kNNG_L = buildKNNG(lsh, k, dataset.size());
             //Graph kNNG_L = buildKNNG_H(cube, k, testset.size());
 
             std::cout << "Finished building the k-NNG." << std::endl;
