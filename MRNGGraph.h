@@ -16,7 +16,6 @@ private:
     std::vector<MRNGNode> nodes;
 
 public:
-    // Προσθήκη των παραμέτρων l και N στον κατασκευαστή
     explicit MRNGGraph(const std::vector<std::vector<unsigned char>>& dataset, int l = 20, int N = 1);
     std::vector<std::pair<int, double>> searchOnGraph(const std::vector<unsigned char>& query, int startNodeIndex, int k, int l);
     [[nodiscard]] const std::vector<MRNGNode>& getNodes() const { return nodes; }

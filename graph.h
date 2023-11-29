@@ -35,6 +35,7 @@ private:
 
 // Function to construct the k-NNG using LSH
 Graph buildKNNG(LSH &lsh, int k, int datasetSize);
+// Function to construct the k-NNG using Hypercube
 Graph buildKNNG_H(Hypercube &hypercube, int k, int datasetSize);
 
 

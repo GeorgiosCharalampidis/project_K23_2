@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
     int number_of_images, image_size;
     int k = 50; // Number of nearest neighbors in graph
     int E = 30; // Number of expansions
-    int R = 10; // Number of random restarts
+    int R = 1; // Number of random restarts
     int N = 1;  // Number of nearest neighbors to search for
     int l = 20;  // Only for Search-on-Graph
     int mode = 0; // 1 for GNNS, 2 for MRNG
@@ -25,6 +25,8 @@ int main(int argc, char** argv) {
     char repeatChoice = 'n'; // to control the loop
     do {
         if (args.size() == 1) {  // Only mode provided, prompt for paths
+            std::cout << "Please enter the mode (1 for GNNS, 2 for MRNG): ";
+            std::cin >> mode;
             std::cout << "Enter the path to the dataset: ";
             std::cin >> inputFile;
         } else {
@@ -74,15 +76,11 @@ int main(int argc, char** argv) {
         double totalTAlgorithm = 0.0;
         double totalTTrue = 0.0;
         double totalMAF = 0.0;
+        double maxApproximationFactor = 0.0;
 
         if (mode == 1) {
 
-            // Create testset with 60000 images
             std::vector<std::vector<unsigned char>> testset;
-
-            for (int i = 0; i < 3000; ++i) {
-                testset.push_back(dataset[i]);
-            }
 
             int T = 10; // Number of greedy steps
 
@@ -90,7 +88,7 @@ int main(int argc, char** argv) {
             //Hypercube cube(testset);
             std::cout << "Started building the k-NNG" << std::endl;
             Graph kNNG_L = buildKNNG(lsh, k, dataset.size());
-            //Graph kNNG_L = buildKNNG_H(cube, k, testset.size());
+            //Graph kNNG_L = buildKNNG_H(cube, k, dataset.size());
 
             std::cout << "Finished building the k-NNG." << std::endl;
             outputFileStream << "GNNS Results" << std::endl;
@@ -109,9 +107,6 @@ int main(int argc, char** argv) {
                 auto endTimeTrue = std::chrono::high_resolution_clock::now();
 
                 double tTrue = std::chrono::duration<double, std::milli>(endTimeTrue - startTimeTrue).count() / 1000.0;
-
-
-                double maxApproximationFactor = 0.0;
 
                 for (int j = 0; j < N; ++j) {
                     double distanceApproximate = results[j].second;
@@ -142,6 +137,7 @@ int main(int argc, char** argv) {
             std::cout << "Finished building the MRNG." << std::endl;
             outputFileStream << "MRNG Results" << std::endl;
 
+
             for (int i = 0; i < 10; ++i) {
                 outputFileStream << "\nQuery: " << i << std::endl;
 
@@ -160,12 +156,11 @@ int main(int argc, char** argv) {
 
                 // Calculate the time taken by the true nearest neighbors search
                 double tTrue = std::chrono::duration<double, std::milli>(endTimeTrue - startTimeTrue).count() / 1000.0;
-                double maxApproximationFactor = 0.0;
 
                 for (int j = 0; j < N; ++j) {
                     double distanceApproximate = results[j].second;
                     double distanceTrue = trueResults[j].second;
-                    maxApproximationFactor = std::max(maxApproximationFactor, distanceApproximate / distanceTrue);
+                    if (j==0) maxApproximationFactor = std::max(maxApproximationFactor, distanceApproximate / distanceTrue);
                 }
 
                 for (int j = 0; j < N; ++j) {
@@ -176,7 +171,6 @@ int main(int argc, char** argv) {
 
                 totalTAlgorithm += tAlgorithm;
                 totalTTrue += tTrue;
-                totalMAF += maxApproximationFactor;
 
             }
 
@@ -187,12 +181,11 @@ int main(int argc, char** argv) {
 
         totalTAlgorithm /= 10;
         totalTTrue /= 10;
-        totalMAF /= 10;
 
         outputFileStream << std::endl;
-        outputFileStream << "tAlgorithm: " << totalTAlgorithm << std::endl;
-        outputFileStream << "tTrue: " << totalTTrue << std::endl;
-        outputFileStream << "MAF: " << totalMAF << std::endl;
+        outputFileStream << "tAverageApproximate: " << totalTAlgorithm << std::endl;
+        outputFileStream << "tAverageTrue: " << totalTTrue << std::endl;
+        outputFileStream << "MAF: " << maxApproximationFactor << std::endl;
 
 
         // Ask the user if they want to repeat with new files
@@ -206,7 +199,6 @@ int main(int argc, char** argv) {
             std::cout << "Enter the path to the new query file (-q): ";
             std::cin >> queryFile;
 
-            // Optional: clear the arguments and populate with new paths
             args.clear();
             args.emplace_back(argv[0]);
             args.emplace_back("-d");
